@@ -8,3 +8,5 @@ settings:
 # Do only edit stuff past this point if you know what you are doing!
 data:
   amount: 1
+  users:
+      - defaultPlayer
