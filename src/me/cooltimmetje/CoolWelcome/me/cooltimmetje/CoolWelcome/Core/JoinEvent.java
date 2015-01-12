@@ -1,5 +1,6 @@
 package me.cooltimmetje.CoolWelcome.me.cooltimmetje.CoolWelcome.Core;
 
+import com.evilmidget38.UUIDFetcher;
 import me.cooltimmetje.CoolWelcome.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,12 +19,22 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class JoinEvent implements Listener{
     public static List<String> users = new ArrayList<String>();
-    public static int amount = 0;
+    public static int amount;
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
         Player p = event.getPlayer();
-        if(users.contains(p.getName())){
+        String name, uuid;
+        name = p.getName();
+
+        try {
+            uuid = new UUIDFetcher(Arrays.asList(name)).call().get(name).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        if(users.contains(uuid)){
             return;
         } else {
             StringBuilder sb = new StringBuilder();
@@ -30,7 +42,7 @@ public class JoinEvent implements Listener{
             sb.append(amount);
             String amountString = sb.toString();
             Bukkit.broadcastMessage((Main.getPlugin().getConfig().get("settings.welcome_message").toString().replace("{0}", p.getName()).replace("{1}", amountString).replace('&', '§')));
-            users.add(p.getName());
+            users.add(uuid);
             amount = amount + 1;
             ConfigManager.writeConfig();
         }

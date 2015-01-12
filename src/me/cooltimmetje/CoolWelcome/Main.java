@@ -68,4 +68,5 @@ public class Main extends JavaPlugin {
     }
 
     public static String tag = "&8[&bCoolWelcome&8] &3".replace('&', '§');
+    public static int configVersion = 1;
 }

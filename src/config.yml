@@ -10,3 +10,6 @@ data:
   amount: 1
   users:
       - defaultPlayer
+
+DoNotTouch:
+  IfYouDoConfigWillReset: 1
